@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .form-control {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, button, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Library Management System</h1>
+    
+    <h2>Add Book</h2>
+    <div class="form-control">
+      <label for="bookID">Book ID:</label>
+      <input type="text" id="bookID" placeholder="Enter Book ID">
+    </div>
+    <div class="form-control">
+      <label for="title">Title:</label>
+      <input type="text" id="title" placeholder="Enter Title">
+    </div>
+    <div class="form-control">
+      <label for="author">Author:</label>
+      <input type="text" id="author" placeholder="Enter Author">
+    </div>
+    <div class="form-control">
+      <label for="genre">Genre:</label>
+      <input type="text" id="genre" placeholder="Enter Genre">
+    </div>
+    <div class="form-control">
+      <label for="status">Availability Status:</label>
+      <select id="status">
+        <option value="Available">Available</option>
+        <option value="Checked Out">Checked Out</option>
+      </select>
+    </div>
+    <button onclick="addBook()">Add Book</button>
+
+    <h2>Books</h2>
+    <button onclick="viewBooks()">View All Books</button>
+    <table id="bookTable">
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Books will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Example JavaScript to simulate backend functionality
+    let books = [];
+
+    // Add a new book
+    function addBook() {
+      const bookID = document.getElementById('bookID').value;
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value;
+      const genre = document.getElementById('genre').value;
+      const status = document.getElementById('status').value;
+
+      // Basic validation
+      if (!bookID || !title || !author || !genre || !status) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      // Simulate adding the book to the backend
+      books.push({ bookID, title, author, genre, status });
+      alert("Book added successfully!");
+      clearFields();
+    }
+
+    // View all books
+    function viewBooks() {
+      const tableBody = document.querySelector("#bookTable tbody");
+      tableBody.innerHTML = ""; // Clear table
+
+      // Render each book as a table row
+      books.forEach((book, index) => {
+        const row = `<tr>
+          <td>${book.bookID}</td>
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.genre}</td>
+          <td>${book.status}</td>
+          <td>
+            <button onclick="deleteBook(${index})">Delete</button>
+          </td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Delete a book
+    function deleteBook(index) {
+      books.splice(index, 1); // Remove book
+      alert("Book deleted successfully!");
+      viewBooks(); // Refresh the table
+    }
+
+    // Clear input fields
+    function clearFields() {
+      document.getElementById('bookID').value = "";
+      document.getElementById('title').value = "";
+      document.getElementById('author').value = "";
+      document.getElementById('genre').value = "";
+      document.getElementById('status').value = "Available";
+    }
+  </script>
+</body>
+</html>
